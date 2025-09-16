@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:59303",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\m.delpapa\\Desktop\\Reactify\\Reactify_AspNet.Server\\..\\reactify_aspnet.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zLNBRtJ8/0I=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\m.delpapa\\Desktop\\Reactify\\Reactify_AspNet.Server\\Reactify_AspNet.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\m.delpapa\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\8.0.20\\microsoft.aspnetcore.spaproxy.8.0.20.nupkg.sha512"
+  ],
+  "logs": []
+}
