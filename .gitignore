@@ -1,0 +1,45 @@
+# === General ===
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# === Node.js / React (client) ===
+reactify_aspnet.client/node_modules/
+reactify_aspnet.client/build/
+reactify_aspnet.client/.env
+reactify_aspnet.client/dist/
+reactify_aspnet.client/obj/
+
+# === ASP.NET Core / .NET (server) ===
+Reactify_AspNet.Server/bin/
+Reactify_AspNet.Server/obj/
+
+# === Visual Studio ===
+node_modules
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# === VS Code ===
+.vscode/
+*.code-workspace
+
+# === NuGet ===
+*.nupkg
+packages/
+project.lock.json
+project.assets.json
+project.nuget.cache
+*.csproj.nuget.*
+
+# === Environment ===
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
