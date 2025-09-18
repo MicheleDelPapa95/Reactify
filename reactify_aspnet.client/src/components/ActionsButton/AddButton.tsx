@@ -25,8 +25,7 @@ export default function AddButton({ onProductAdded }: Props) {
 
 
     const handleAdd = async () => {
-        if (title.trim() === '') return;
-
+        
         try {
             // Ottiengo tutti i prodotti
             const getResponse = await axios.get<Product[]>('/api/todos');

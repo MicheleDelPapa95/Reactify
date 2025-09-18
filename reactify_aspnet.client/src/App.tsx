@@ -3,7 +3,9 @@ import './App.css';
 import axios from 'axios';
 import DeleteButton from './components/ActionsButton/DeleteButton.tsx';
 import AddButton from './components/ActionsButton/AddButton.tsx';
-//import EditButton from './components/ActionsButton/EditButton.tsx';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
+import EditButton from './components/ActionsButton/EditButton.tsx';
 
 interface Product {
     id: number;
@@ -14,6 +16,15 @@ interface Product {
 function App() {
 
     const [products, setProducts] = useState<Product[]>([]);
+
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+
+    const handleEditClick = (product: Product) => {
+        setSelectedProduct(product);
+        setIsEditOpen(true);
+    };
+
 
     const fetchProducts = () => {
         axios.get<Product[]>('/api/todos')
@@ -49,8 +60,10 @@ function App() {
             }}
         >
             <span>{product.title}</span>
+            <IconButton onClick={() => handleEditClick(product)} aria-label="Modifica" disabled={product.isDeleted}>
+                <EditIcon />
+            </IconButton>
             <DeleteButton onClick={() => handleDelete(product.id)} />
-            
         </li>
     );
 
@@ -61,6 +74,12 @@ function App() {
             <div style={{ marginTop: '20px' }}>
                 <AddButton onProductAdded={fetchProducts} />
             </div>
+            <EditButton
+                open={isEditOpen}
+                onClose={() => setIsEditOpen(false)}
+                product={selectedProduct}
+                onProductUpdated={fetchProducts}
+            />
         </div>
         
     );
