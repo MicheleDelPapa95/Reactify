@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import DeleteButton from './components/ActionsButton/DeleteButton.tsx';
+import AddButton from './components/ActionsButton/AddButton.tsx';
+//import EditButton from './components/ActionsButton/EditButton.tsx';
 
 interface Product {
     id: number;
@@ -13,14 +15,18 @@ function App() {
 
     const [products, setProducts] = useState<Product[]>([]);
 
-    useEffect(() => {
+    const fetchProducts = () => {
         axios.get<Product[]>('/api/todos')
             .then(response => {
                 setProducts(response.data);
             })
             .catch(error => {
                 console.error("Errore nel recupero dei dati", error)
-            })
+            });
+    };
+
+    useEffect(() => {
+        fetchProducts();
     }, []);
 
     const handleDelete = async (id: number) => {
@@ -52,6 +58,9 @@ function App() {
         <div>
             <h2>Lista della spesa:</h2>
             <ul>{listItems}</ul>
+            <div style={{ marginTop: '20px' }}>
+                <AddButton onProductAdded={fetchProducts} />
+            </div>
         </div>
         
     );
