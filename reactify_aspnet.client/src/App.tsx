@@ -1,58 +1,61 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import axios from 'axios';
+import DeleteButton from './components/ActionsButton/DeleteButton.tsx';
 
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+interface Product {
+    id: number;
+    title: string;
+    isDeleted: boolean;
 }
 
 function App() {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
+
+    const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        populateWeatherData();
+        axios.get<Product[]>('/api/todos')
+            .then(response => {
+                setProducts(response.data);
+            })
+            .catch(error => {
+                console.error("Errore nel recupero dei dati", error)
+            })
     }, []);
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tableLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
+    const handleDelete = async (id: number) => {
+        try {
+            await axios.delete(`/api/todos/${id}`);
+            setProducts(prevProducts => prevProducts.filter(product => product.id !== id));
+        } catch (error) {
+            console.error('Errore durante l\'eliminazione del prodotto:', error);
+        }
+    };
+
+    const listItems = products.map(product =>
+        <li
+            key={product.id}
+            style={{
+                color: product.isDeleted ? 'lightgray' : 'black',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+            }}
+        >
+            <span>{product.title}</span>
+            <DeleteButton onClick={() => handleDelete(product.id)} />
+            
+        </li>
+    );
 
     return (
         <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
+            <h2>Lista della spesa:</h2>
+            <ul>{listItems}</ul>
         </div>
+        
     );
-
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        if (response.ok) {
-            const data = await response.json();
-            setForecasts(data);
-        }
-    }
+    
 }
 
 export default App;
