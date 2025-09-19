@@ -1,6 +1,6 @@
-@Reactify_AspNet.Server_HostAddress = http://localhost:5095
+@Reactify_AspNet.Server_HostAddress = http://reactify:5095
 
-GET {{Reactify_AspNet.Server_HostAddress}}/weatherforecast/
+GET {{Reactify_AspNet.Server_HostAddress}}/api/todos/
 Accept: application/json
 
 ###
