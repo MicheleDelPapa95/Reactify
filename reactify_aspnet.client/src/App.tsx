@@ -60,27 +60,63 @@ function App() {
             }}
         >
             <span>{product.title}</span>
-            <IconButton onClick={() => handleEditClick(product)} aria-label="Modifica" disabled={product.isDeleted}>
-                <EditIcon />
-            </IconButton>
-            <DeleteButton onClick={() => handleDelete(product.id)} />
+            <div style={{ display: 'flex', gap: '10px' }}>
+                <IconButton onClick={() => handleEditClick(product)} aria-label="Modifica" disabled={product.isDeleted}>
+                    <EditIcon />
+                </IconButton>
+                <DeleteButton onClick={() => handleDelete(product.id)} />
+            </div>
+            
         </li>
     );
 
     return (
-        <div>
-            <h2>Lista della spesa:</h2>
-            <ul>{listItems}</ul>
-            <div style={{ marginTop: '20px' }}>
-                <AddButton onProductAdded={fetchProducts} />
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '80vh',
+                backgroundColor: '#f9f9f9'
+            }}
+        >
+            <div
+                style={{
+                    maxWidth: '500px',
+                    width: '100%',
+                    padding: '20px',
+                    boxSizing: 'border-box',
+                    backgroundColor: 'white',
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                }}
+            >
+                <h2 style={{ textAlign: 'center' }}>Lista della spesa:</h2>
+                <ul>{listItems}</ul>
+
+                <div style={{ marginTop: '20px' }}>
+                    <AddButton
+                        onProductAdded={(newProduct) =>
+                            setProducts(prev => [...prev, newProduct])
+                        }
+                    />
+                </div>
+
+                <EditButton
+                    open={isEditOpen}
+                    onClose={() => setIsEditOpen(false)}
+                    product={selectedProduct}
+                    onProductUpdated={(updatedProduct) => {
+                        setProducts(prev =>
+                            prev.map(p =>
+                                p.id === updatedProduct.id ? updatedProduct : p
+                            )
+                        );
+                    }}
+                />
             </div>
-            <EditButton
-                open={isEditOpen}
-                onClose={() => setIsEditOpen(false)}
-                product={selectedProduct}
-                onProductUpdated={fetchProducts}
-            />
         </div>
+
         
     );
     

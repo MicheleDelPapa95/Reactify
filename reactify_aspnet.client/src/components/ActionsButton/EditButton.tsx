@@ -21,8 +21,9 @@ type Props = {
     open: boolean;
     onClose: () => void;
     product: Product | null;
-    onProductUpdated: () => void;
+    onProductUpdated: (updatedProduct: Product) => void;
 };
+
 
 export default function EditButton({ open, onClose, product, onProductUpdated }: Props) {
     const [title, setTitle] = useState('');
@@ -45,13 +46,16 @@ export default function EditButton({ open, onClose, product, onProductUpdated }:
         };
 
         try {
-            await axios.put(`/api/todos/${product.id}`, updatedProduct);
-            onProductUpdated();
+            const response = await axios.put(`/api/todos/${product.id}`, updatedProduct);
+            const updated = response.data;
+
+            onProductUpdated(updated);
             onClose();
         } catch (error) {
             console.error('Errore durante la modifica del prodotto:', error);
         }
     };
+
 
     return (
         <Dialog open={open} onClose={onClose}>
