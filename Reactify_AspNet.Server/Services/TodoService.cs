@@ -6,10 +6,10 @@ namespace Reactify_AspNet.Server.Services
     {
         private readonly List<TodoItem> _todos = new()
         {
-            new TodoItem {Id = 1, Title = "Latte", IsDeleted = false},
+            new TodoItem {Id = 1, Title = "Latte", IsDeleted = true},
             new TodoItem {Id = 2, Title="Uova", IsDeleted = false},
             new TodoItem {Id = 3, Title="Guanciale", IsDeleted = false},
-            new TodoItem {Id = 4, Title = "Pecorino", IsDeleted = false}
+            new TodoItem {Id = 4, Title = "Pecorino", IsDeleted = true}
         };
 
         public IEnumerable<TodoItem> GetAll() => _todos;

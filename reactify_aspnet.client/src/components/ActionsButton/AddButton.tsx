@@ -16,8 +16,9 @@ interface Product {
 }
 
 type Props = {
-    onProductAdded: () => void
+    onProductAdded: (product: Product) => void;
 };
+
 
 export default function AddButton({ onProductAdded }: Props) {
     const [open, setOpen] = useState(false);
@@ -25,36 +26,29 @@ export default function AddButton({ onProductAdded }: Props) {
 
 
     const handleAdd = async () => {
-        
         try {
-            // Ottiengo tutti i prodotti
-            const getResponse = await axios.get<Product[]>('/api/todos');
-            const products = getResponse.data;
-
-            // Calcola il nuovo ID
-            const maxId = products.length > 0 ? Math.max(...products.map(p => p.id)) : 0;
-            const newId = maxId + 1;
-
-            // Crea il nuovo prodotto
-            const newProduct: Product = {
-                id: newId,
+            const newProduct = {
                 title: title.trim(),
                 isDeleted: false
             };
 
-            // Invia la richiesta POST
             const postResponse = await axios.post('/api/todos', newProduct);
-            console.log('Prodotto aggiunto:', postResponse.data);
+            const addedProduct = postResponse.data;
+
+            console.log('Prodotto aggiunto:', addedProduct);
+
+            console.log('ID restituito dal server:', addedProduct.id);
+
+
+            onProductAdded(addedProduct);
 
             setTitle('');
             setOpen(false);
-
-            // Riaggiorna la lista
-            onProductAdded();
         } catch (error) {
             console.error('Errore durante l\'aggiunta del prodotto:', error);
         }
     };
+
 
 
     return (

@@ -9,7 +9,13 @@ namespace Reactify_AspNet.Server.Controllers
     [Route("api/[controller]")]
     public class TodosController : ControllerBase
     {
-        private readonly TodoService _todoService = new();
+        private readonly TodoService _todoService;
+
+        // Costruttore con DI
+        public TodosController(TodoService todoService) 
+        {
+            _todoService = todoService;
+        }
 
         // GET: api/todos
         [HttpGet]
