@@ -39,11 +39,12 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'https://localhost:7034', // porta del backend ASP.NET Core
+                target: 'https://reactify:7034', // porta del backend ASP.NET Core
                 changeOrigin: true,
                 secure: false,
             },
         },
+        host: 'reactify',
     },
 
 })
