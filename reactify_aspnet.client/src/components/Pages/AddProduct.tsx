@@ -1,0 +1,54 @@
+import { useState } from 'react';
+import { TextField, Button, Box, Typography } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+const AddProduct = () => {
+    const [title, setTitle] = useState('');
+    const navigate = useNavigate();
+
+    const handleAdd = async () => {
+        try {
+            const newProduct = {
+                title: title.trim(),
+                isDeleted: false
+            };
+
+            const response = await axios.post('/api/todos', newProduct);
+            console.log('Prodotto aggiunto:', response.data);
+            navigate('/products');
+        } catch (error) {
+            console.error('Errore durante l\'aggiunta del prodotto:', error);
+        }
+    };
+
+    return (
+        <Box sx={{ maxWidth: 500, margin: 'auto', mt: 5 }}>
+            <Typography variant="h5" gutterBottom>
+                Aggiungi nuovo prodotto
+            </Typography>
+            <TextField
+                label="Nome prodotto"
+                fullWidth
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                margin="normal"
+            />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+                <Button variant="outlined" onClick={() => navigate('/products')}>
+                    Annulla
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleAdd}
+                    disabled={title.trim() === ''}
+                >
+                    Aggiungi
+                </Button>
+            </Box>
+        </Box>
+    );
+};
+
+export default AddProduct;
