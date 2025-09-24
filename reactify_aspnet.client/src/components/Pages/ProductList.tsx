@@ -19,7 +19,7 @@ function ProductList() {
     const navigate = useNavigate();
 
     const handleEditClick = (product: Product) => {
-        navigate('/edit/${product.id}', { state: {product}})
+        navigate(`/edit/${product.id}`, { state: {product}})
     };
 
 
