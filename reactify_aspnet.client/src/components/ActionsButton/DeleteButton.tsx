@@ -29,11 +29,11 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ onClick }) => {
             <Dialog open={open} onClose={handleClose} className={styles.dialog}>
                 <DialogTitle className={styles.dialogTitle}>Conferma Eliminazione</DialogTitle>
                 <DialogContent>
-                    <DialogContentText className={styles.dialogText}>
+                    <DialogContentText style={{ marginTop: '10px' }}>
                         Sei sicuro di voler eliminare questo prodotto?
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions className={styles.dialogActions}>
+                <DialogActions style={{ padding: '20px', justifyContent: 'space-between' }}>
                     <Button onClick={handleClose} color="primary">
                         Annulla
                     </Button>

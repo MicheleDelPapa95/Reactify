@@ -23,8 +23,8 @@ interface MenuNode {
 const menuNodes: MenuNode[] = [
     { id: "1", parent: null, name_it: "Home", module: "Home", path: ''},
     { id: "2", parent: null, name_it: "Prodotti", module: "ProductList", path: 'products' },
-    { id: "3", parent: "2", name_it: "Aggiungi", module: "AddProduct", path: 'add' },
-    { id: "4", parent: "2", name_it: "Modifica", module: "EditProduct", path: 'edit/:id', dynamic: true },
+    { id: "3", parent: null, name_it: "Aggiungi", module: "AddProduct", path: 'products/add' },
+    { id: "4", parent: null, name_it: "Modifica", module: "EditProduct", path: 'products/edit/:id', dynamic: true },
 ];
 
 

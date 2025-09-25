@@ -20,12 +20,12 @@ function ProductList() {
     const navigate = useNavigate();
 
     const handleEditClick = (product: Product) => {
-        navigate(`/edit/${product.id}`, { state: {product}})
+        navigate(`/products/edit/${product.id}`, { state: {product}})
     };
 
 
     const handleAddClick = () => {
-        navigate('/add');
+        navigate('/products/add');
     };
 
     const fetchProducts = () => {
