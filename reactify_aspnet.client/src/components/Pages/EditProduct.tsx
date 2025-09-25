@@ -9,6 +9,8 @@ import {
     Typography
 } from '@mui/material';
 import axios from 'axios';
+import DeleteButton from '../ActionsButton/DeleteButton';
+import styles from './EditProduct.module.css';
 
 interface Product {
     id: number;
@@ -61,8 +63,19 @@ const EditProduct = () => {
         }
     };
 
+    const handleDelete = async () => {
+        if (!product) return;
+
+        try {
+            await axios.delete(`/api/todos/${product.id}`);
+            navigate('/products');
+        } catch (error) {
+            console.error('Errore durante l\'eliminazione del prodotto:', error);
+        }
+    };
+
     return (
-        <Box sx={{ maxWidth: 500, margin: 'auto', mt: 5 }}>
+        <div className={styles.container}>
             <Typography variant="h5" gutterBottom>
                 Modifica Prodotto
             </Typography>
@@ -85,24 +98,27 @@ const EditProduct = () => {
                         }
                         label="Comprato"
                     />
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+                    <div className={styles.actions}>
                         <Button variant="outlined" onClick={() => navigate('/products')}>
                             Annulla
                         </Button>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleUpdate}
-                            disabled={title.trim() === ''}
-                        >
-                            Salva
-                        </Button>
-                    </Box>
+                        <div className={styles.rightButtons}>
+                            <DeleteButton onClick={handleDelete} />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleUpdate}
+                                disabled={title.trim() === ''}
+                            >
+                                Salva
+                            </Button>
+                        </div>
+                    </div>
                 </>
             ) : (
                 <Typography>Caricamento...</Typography>
             )}
-        </Box>
+        </div>
     );
 };
 

@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
+import styles from './ProductList.module.css';
 
 interface Product {
     id: number;
@@ -72,38 +73,18 @@ function ProductList() {
     );
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '80vh',
-                backgroundColor: '#f9f9f9'
-            }}
-        >
-            <div
-                style={{
-                    maxWidth: '550px',
-                    width: '100%',
-                    padding: '20px',
-                    boxSizing: 'border-box',
-                    backgroundColor: 'white',
-                    borderRadius: '8px',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
-                }}
-            >
-                <h2 style={{ textAlign: 'center' }}>Lista della spesa:</h2>
+        <div className={styles.container}>
+            <div className={styles.card}>
+                <h2 className={styles.title}>Lista della spesa:</h2>
                 <ul>{listItems}</ul>
 
-                <div style={{ marginTop: '30px', justifySelf: 'anchor-center' }}>
+                <div className={styles.buttonContainer}>
                     <Button variant="contained" color="primary" onClick={handleAddClick}>
                         Aggiungi nuovo prodotto
                     </Button>
                 </div>
             </div>
         </div>
-
-
     );
 }
 

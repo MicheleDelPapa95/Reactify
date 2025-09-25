@@ -12,6 +12,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Outlet } from 'react-router-dom';
+import styles from './PersistentDrawer.module.css';
 
 const drawerWidth = 240;
 
@@ -74,7 +76,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-const PersistentDrawer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const PersistentDrawer: React.FC = () => {
 
     const navigate = useNavigate();
 
@@ -95,7 +97,7 @@ const PersistentDrawer: React.FC<{ children: React.ReactNode }> = ({ children })
     ];
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box className={styles.root}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
@@ -104,12 +106,8 @@ const PersistentDrawer: React.FC<{ children: React.ReactNode }> = ({ children })
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
-                        sx={[
-                            {
-                                mr: 2,
-                            },
-                            open && { display: 'none' },
-                        ]}
+                        sx={{ mr: 2 }}
+                        className={open ? styles.hide : ''}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -152,7 +150,7 @@ const PersistentDrawer: React.FC<{ children: React.ReactNode }> = ({ children })
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                {children}
+                <Outlet />
             </Main>
         </Box>
     );

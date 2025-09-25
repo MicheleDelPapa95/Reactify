@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styles from './AddProduct.module.css';
+
 
 const AddProduct = () => {
     const [title, setTitle] = useState('');
@@ -23,7 +25,7 @@ const AddProduct = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: 500, margin: 'auto', mt: 5 }}>
+        <div className={styles.container}>
             <Typography variant="h5" gutterBottom>
                 Aggiungi nuovo prodotto
             </Typography>
@@ -34,7 +36,7 @@ const AddProduct = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 margin="normal"
             />
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+            <div className={styles.actions}>
                 <Button variant="outlined" onClick={() => navigate('/products')}>
                     Annulla
                 </Button>
@@ -46,8 +48,8 @@ const AddProduct = () => {
                 >
                     Aggiungi
                 </Button>
-            </Box>
-        </Box>
+            </div>
+        </div>
     );
 };
 
