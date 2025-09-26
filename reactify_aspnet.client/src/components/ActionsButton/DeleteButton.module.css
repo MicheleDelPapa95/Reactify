@@ -1,0 +1,11 @@
+.dialog {
+    max-width: 500px;
+    margin: auto;
+}
+
+.dialogTitle {
+    place-self: center;
+    margin-top: 10px;
+}
+
+
