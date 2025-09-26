@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import { Drawer, List, ListItem, ListItemText, Toolbar, Typography, Box, ListItemButton, ListItemIcon } from '@mui/material';
+import { Drawer, List, ListItemText, Toolbar, Typography, Box, ListItemButton, ListItemIcon, Collapse } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -14,6 +15,10 @@ import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Outlet } from 'react-router-dom';
 import styles from './PersistentDrawer.module.css';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import AddIcon from '@mui/icons-material/Add';
+
 
 const drawerWidth = 240;
 
@@ -76,9 +81,47 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-const PersistentDrawer: React.FC = () => {
 
+const MenuItem: React.FC<{ item: any }> = ({ item }) => {
+    const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
+    const hasChildren = item.children && item.children.length > 0;
+
+    const handleClick = () => {
+        if (hasChildren) {
+            setOpen(!open);
+            const path = item.path;
+            navigate(path);
+        } else {
+            const path = item.path;
+            navigate(path);
+        }
+    };
+
+    return (
+        <>
+            <ListItemButton onClick={handleClick}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText
+                    primary={item.text} sx={{ ml: 2 }}
+                />
+                {hasChildren ? (open ? <ExpandLess /> : <ExpandMore />) : null}
+            </ListItemButton>
+            {hasChildren && (
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        {item.children.map((child: any) => (
+                            <MenuItem key={child.id} item={child} />
+                        ))}
+                    </List>
+                </Collapse>
+            )}
+        </>
+    );
+}
+
+
+const PersistentDrawer: React.FC = () => {
 
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -91,10 +134,33 @@ const PersistentDrawer: React.FC = () => {
         setOpen(false);
     };
 
-    const menuItems = [
-        { text: 'Home', path: '/', icon: <HomeIcon /> },
-        { text: 'Products', path: '/products', icon: <ShoppingCartIcon /> },
+    const menuNodes = [
+        { id: '1', parent: null, text: 'Home', path: '/', icon: <HomeIcon /> },
+        { id: '2', parent: null, text: 'Products', path: '/products', icon: <ShoppingCartIcon /> },
+        { id: '3', parent: '2', text: 'Aggiungi', path: '/add', icon: <AddIcon /> },
     ];
+
+
+    const buildMenuTree = (nodes: typeof menuNodes) => {
+        const map = new Map<string, any>();
+        const tree: any[] = [];
+
+        nodes.forEach((node) => {
+            map.set(node.id, { ...node, children: [] });
+        });
+
+        nodes.forEach((node) => {
+            if (node.parent) {
+                map.get(node.parent).children.push(map.get(node.id));
+            } else {
+                tree.push(map.get(node.id));
+            }
+        });
+
+        return tree;
+    };
+
+    const menuTree = buildMenuTree(menuNodes);
 
     return (
         <Box className={styles.root}>
@@ -136,15 +202,8 @@ const PersistentDrawer: React.FC = () => {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {menuItems.map((item) => (
-                        <ListItem key={item.text} onClick={() => navigate(item.path)}>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={item.text} sx={{ ml: 2 }} />
-                            </ListItemButton>
-                        </ListItem>
+                    {menuTree.map((item) => (
+                        <MenuItem key={item.id} item={item} />
                     ))}
                 </List>
             </Drawer>
