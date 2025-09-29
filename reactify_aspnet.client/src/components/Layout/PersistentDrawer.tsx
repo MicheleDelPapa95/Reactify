@@ -18,6 +18,7 @@ import styles from './PersistentDrawer.module.css';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
+import { useTranslation } from 'react-i18next';
 
 
 const drawerWidth = 240;
@@ -103,7 +104,7 @@ const MenuItem: React.FC<{ item: any }> = ({ item }) => {
             <ListItemButton onClick={handleClick}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText
-                    primary={item.text} sx={{ ml: 2 }}
+                    primary={(item.text)} sx={{ ml: 2 }}
                 />
                 {hasChildren ? (open ? <ExpandLess /> : <ExpandMore />) : null}
             </ListItemButton>
@@ -123,7 +124,10 @@ const MenuItem: React.FC<{ item: any }> = ({ item }) => {
 
 const PersistentDrawer: React.FC = () => {
 
+    const { t, i18n } = useTranslation();
+
     const theme = useTheme();
+
     const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
@@ -135,9 +139,9 @@ const PersistentDrawer: React.FC = () => {
     };
 
     const menuNodes = [
-        { id: '1', parent: null, text: 'Home', path: '/', icon: <HomeIcon /> },
-        { id: '2', parent: null, text: 'Products', path: '/products', icon: <ShoppingCartIcon /> },
-        { id: '3', parent: '2', text: 'Aggiungi', path: '/add', icon: <AddIcon /> },
+        { id: '1', parent: null, text: t('Home'), path: '/', icon: <HomeIcon /> },
+        { id: '2', parent: null, text: t('Products'), path: '/products', icon: <ShoppingCartIcon /> },
+        { id: '3', parent: '2', text: t('Add'), path: '/add', icon: <AddIcon /> },
     ];
 
 
@@ -177,9 +181,17 @@ const PersistentDrawer: React.FC = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Reactify
-                    </Typography>
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+                        {t('Reactify')}
+                    </Typography>             
+                    <select
+                        value={i18n.language}
+                        onChange={(e) => i18n.changeLanguage(e.target.value)}
+                        style={{ color: 'white', backgroundColor: 'transparent', border: 'none' }}
+                      >
+                        <option value="en">EN</option>
+                        <option value="it">IT</option>
+                      </select>
                 </Toolbar>
             </AppBar>
             <Drawer
