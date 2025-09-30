@@ -6,13 +6,29 @@ namespace Reactify_AspNet.Server.Services
     {
         private readonly List<TodoItem> _todos = new()
         {
-            new TodoItem {Id = 1, Title = "Latte", IsDeleted = true},
-            new TodoItem {Id = 2, Title="Uova", IsDeleted = false},
-            new TodoItem {Id = 3, Title="Guanciale", IsDeleted = false},
-            new TodoItem {Id = 4, Title = "Pecorino", IsDeleted = true}
+            new TodoItem {Id = 1, Title = "Latte", IsDeleted = true, Tag = "Cibo"},
+            new TodoItem {Id = 2, Title="Uova", IsDeleted = false, Tag = "Cibo"},
+            new TodoItem {Id = 3, Title="Guanciale", IsDeleted = false, Tag = "Cibo"},
+            new TodoItem {Id = 4, Title = "Pecorino", IsDeleted = true, Tag = "Cibo"},
+            new TodoItem {Id = 5, Title = "Spillatrice", IsDeleted = true, Tag = "Cancelleria"},
+            new TodoItem {Id = 6, Title = "Colla", IsDeleted = true, Tag = "Cancelleria"},
+            new TodoItem {Id = 7, Title = "Bulloni", IsDeleted = true, Tag = "Ferramenta"},
         };
 
+        // Metodo per ritornare l'intera lista
         public IEnumerable<TodoItem> GetAll() => _todos;
+
+        // Metodo per ritornare la lista con lo stesso tag
+        public IEnumerable<TodoItem> GetByTag(string tag)
+        {
+            return [.. _todos.Where(t => t.Tag.Equals(tag, StringComparison.OrdinalIgnoreCase))];
+        }
+
+        // Metodo per estrarre tutti i tag non duplicati
+        public IEnumerable<string> GetAllTags()
+        {
+            return [.. _todos.Select(t => t.Tag).Distinct(StringComparer.OrdinalIgnoreCase)];
+        }
 
         public TodoItem? GetById(int id) => _todos.FirstOrDefault(t => t.Id == id);
 

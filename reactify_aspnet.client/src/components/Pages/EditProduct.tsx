@@ -5,7 +5,6 @@ import {
     Button,
     FormControlLabel,
     Checkbox,
-    Box,
     Typography
 } from '@mui/material';
 import axios from 'axios';
@@ -26,6 +25,7 @@ const EditProduct = () => {
     const [product, setProduct] = useState<Product | null>(null);
     const [title, setTitle] = useState('');
     const [isDeleted, setIsDeleted] = useState(false);
+    const tag = location.state?.tag ?? '';
 
     useEffect(() => {
         if (location.state?.product) {
@@ -57,7 +57,7 @@ const EditProduct = () => {
         try {
             const response = await axios.put(`/api/todos/${product.id}`, updatedProduct);
             console.log('Prodotto aggiornato:', response.data);
-            navigate('/products');
+            navigate(`/${tag}`);
         } catch (error) {
             console.error('Errore durante la modifica del prodotto:', error);
         }
@@ -68,7 +68,7 @@ const EditProduct = () => {
 
         try {
             await axios.delete(`/api/todos/${product.id}`);
-            navigate('/products');
+            navigate(`/${tag}`);
         } catch (error) {
             console.error('Errore durante l\'eliminazione del prodotto:', error);
         }
@@ -99,7 +99,7 @@ const EditProduct = () => {
                         label="Comprato"
                     />
                     <div className={styles.actions}>
-                        <Button variant="outlined" onClick={() => navigate('/products')}>
+                        <Button variant="outlined" onClick={() => navigate(`/${tag}`)}>
                             Annulla
                         </Button>
                         <div className={styles.rightButtons}>

@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import styles from './ProductList.module.css';
+import { useParams } from 'react-router-dom';
 
 interface Product {
     id: number;
@@ -15,32 +16,36 @@ interface Product {
 
 function ProductList() {
 
+    const { tag } = useParams();
+
     const [products, setProducts] = useState<Product[]>([]);
 
     const navigate = useNavigate();
 
     const handleEditClick = (product: Product) => {
-        navigate(`/edit/${product.id}`, { state: {product}})
+        navigate(`/edit/${product.id}`, { state: { product, tag: tag } })
     };
 
 
     const handleAddClick = () => {
-        navigate('/add');
+        navigate('/add', { state: { tag: tag } });
     };
 
     const fetchProducts = () => {
-        axios.get<Product[]>('/api/todos')
+        const endpoint = tag ? `/api/todos/tag/${tag}` : '/api/todos';
+
+        axios.get<Product[]>(endpoint)
             .then(response => {
                 setProducts(response.data);
             })
             .catch(error => {
-                console.error("Errore nel recupero dei dati", error)
+                console.error("Errore nel recupero dei dati", error);
             });
     };
 
     useEffect(() => {
         fetchProducts();
-    }, []);
+    }, [tag]);
 
     const handleDelete = async (id: number) => {
         try {
@@ -75,7 +80,7 @@ function ProductList() {
     return (
         <div className={styles.container}>
             <div className={styles.card}>
-                <h2 className={styles.title}>Lista della spesa:</h2>
+                <h2 className={styles.title}>{`Lista ${tag}:`}</h2>
                 <ul>{listItems}</ul>
 
                 <div className={styles.buttonContainer}>

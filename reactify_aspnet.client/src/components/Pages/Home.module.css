@@ -1,0 +1,12 @@
+.container {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 40px; /* mt: 5 in MUI equivale a 5 * 8px */
+    justify-items: anchor-center;
+}
+
+.actions {
+    display: flex;
+    margin-top: 16px;
+}
+

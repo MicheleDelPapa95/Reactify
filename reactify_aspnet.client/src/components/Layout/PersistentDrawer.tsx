@@ -17,11 +17,12 @@ import { Outlet } from 'react-router-dom';
 import styles from './PersistentDrawer.module.css';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
+import { useTagContext } from '../Pages/TagContext';
 
 
 const drawerWidth = 240;
+
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
@@ -138,10 +139,17 @@ const PersistentDrawer: React.FC = () => {
         setOpen(false);
     };
 
+    const { tags } = useTagContext();
+
     const menuNodes = [
         { id: '1', parent: null, text: t('Home'), path: '/', icon: <HomeIcon /> },
-        { id: '2', parent: null, text: t('Products'), path: '/products', icon: <ShoppingCartIcon /> },
-        { id: '3', parent: '2', text: t('Add'), path: '/add', icon: <AddIcon /> },
+        ...tags.map((tag: { id: any; name: any; }) => ({
+            id: `tag-${tag.id}`,
+            parent: null,
+            text: tag.name,
+            path: `/${tag.name}`,
+            icon: <ShoppingCartIcon />
+        }))
     ];
 
 

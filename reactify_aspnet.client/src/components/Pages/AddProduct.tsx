@@ -3,22 +3,27 @@ import { TextField, Button, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './AddProduct.module.css';
+import { useLocation } from 'react-router-dom';
 
 
 const AddProduct = () => {
     const [title, setTitle] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
+    const tag = location.state?.tag ?? '';
+
 
     const handleAdd = async () => {
         try {
             const newProduct = {
                 title: title.trim(),
-                isDeleted: false
+                isDeleted: false,
+                tag: tag
             };
 
             const response = await axios.post('/api/todos', newProduct);
             console.log('Prodotto aggiunto:', response.data);
-            navigate('/products');
+            navigate(`/${tag}`);
         } catch (error) {
             console.error('Errore durante l\'aggiunta del prodotto:', error);
         }
@@ -37,7 +42,7 @@ const AddProduct = () => {
                 margin="normal"
             />
             <div className={styles.actions}>
-                <Button variant="outlined" onClick={() => navigate('/products')}>
+                <Button variant="outlined" onClick={() => navigate(`/${tag}`)}>
                     Annulla
                 </Button>
                 <Button

@@ -14,9 +14,9 @@ const router = createBrowserRouter([
         element: <PersistentDrawer />,
         children: [
             { path: '', element: <Home /> },
-            { path: 'products', element: <ProductList /> },
             { path: 'add', element: <AddProduct /> },
             { path: 'edit/:id', element: <EditProduct /> },
+            { path: '/:tag', element: <ProductList /> }
         ],
     },
 ]);

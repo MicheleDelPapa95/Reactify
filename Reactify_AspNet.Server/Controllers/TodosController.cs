@@ -21,6 +21,22 @@ namespace Reactify_AspNet.Server.Controllers
         [HttpGet]
         public IActionResult Get() => Ok(_todoService.GetAll());
 
+        // GET: api/todos/tags
+        [HttpGet("tags")]
+        public IActionResult GetTags()
+        {
+            var tags = _todoService.GetAllTags();
+            return Ok(tags);
+        }
+
+        // GET: api/todos/tag/{tag}
+        [HttpGet("tag/{tag}")]
+        public IActionResult GetByTag(string tag)
+        {
+            var filtered = _todoService.GetByTag(tag);
+            return Ok(filtered);
+        }
+
         // POST: api/todos
         [HttpPost]
         public IActionResult Post([FromBody] TodoItem item)
