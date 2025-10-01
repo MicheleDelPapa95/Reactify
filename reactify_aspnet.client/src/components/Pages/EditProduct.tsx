@@ -10,6 +10,7 @@ import {
 import axios from 'axios';
 import DeleteButton from '../ActionsButton/DeleteButton';
 import styles from './EditProduct.module.css';
+import { useTranslation } from 'react-i18next';
 
 interface Product {
     id: number;
@@ -21,6 +22,7 @@ const EditProduct = () => {
     const location = useLocation();
     const { id } = useParams();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const [product, setProduct] = useState<Product | null>(null);
     const [title, setTitle] = useState('');
@@ -77,13 +79,13 @@ const EditProduct = () => {
     return (
         <div className={styles.container}>
             <Typography variant="h5" gutterBottom>
-                Modifica Prodotto
+                {t('modifica_item')}
             </Typography>
 
             {product ? (
                 <>
                     <TextField
-                        label="Nome prodotto"
+                        label={t('modifica_label')}
                         fullWidth
                         margin="normal"
                         value={title}
@@ -96,11 +98,11 @@ const EditProduct = () => {
                                 onChange={(e) => setIsDeleted(e.target.checked)}
                             />
                         }
-                        label="Comprato"
+                        label={t('comprato_label')}
                     />
                     <div className={styles.actions}>
                         <Button variant="outlined" onClick={() => navigate(`/${tag}`)}>
-                            Annulla
+                            {t('button.annulla')}
                         </Button>
                         <div className={styles.rightButtons}>
                             <DeleteButton onClick={handleDelete} />
@@ -110,7 +112,7 @@ const EditProduct = () => {
                                 onClick={handleUpdate}
                                 disabled={title.trim() === ''}
                             >
-                                Salva
+                                {t('button.salva')}
                             </Button>
                         </div>
                     </div>

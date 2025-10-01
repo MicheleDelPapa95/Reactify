@@ -190,12 +190,12 @@ const PersistentDrawer: React.FC = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-                        {t('Reactify')}
+                        {t('app_name')}
                     </Typography>             
                     <select
                         value={i18n.language}
                         onChange={(e) => i18n.changeLanguage(e.target.value)}
-                        style={{ color: 'white', backgroundColor: 'transparent', border: 'none' }}
+                        className={styles.select}
                       >
                         <option value="en">EN</option>
                         <option value="it">IT</option>

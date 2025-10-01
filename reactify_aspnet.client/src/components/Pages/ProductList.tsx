@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import styles from './ProductList.module.css';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface Product {
     id: number;
@@ -15,6 +16,8 @@ interface Product {
 }
 
 function ProductList() {
+
+    const { t } = useTranslation();
 
     const { tag } = useParams();
 
@@ -80,12 +83,12 @@ function ProductList() {
     return (
         <div className={styles.container}>
             <div className={styles.card}>
-                <h2 className={styles.title}>{`Lista ${tag}:`}</h2>
+                <h2 className={styles.title}>{t('lista', {tag})}</h2>
                 <ul>{listItems}</ul>
 
                 <div className={styles.buttonContainer}>
                     <Button variant="contained" color="primary" onClick={handleAddClick}>
-                        Aggiungi nuovo prodotto
+                        {t('aggiungi_item')}
                     </Button>
                 </div>
             </div>

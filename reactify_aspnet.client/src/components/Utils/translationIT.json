@@ -1,0 +1,22 @@
+{
+  "app_name": "Reactify",
+  "home": {
+    "welcome": "Benvenuto nella Home!",
+    "subtitle": "Vuoi aggiungere una nuova lista?",
+    "label": "Nuovo tag"
+  },
+  "button": {
+    "salva": "SALVA",
+    "annulla": "ANNULLA",
+    "aggiungi": "AGGIUNGI",
+    "aggiungi_item": "AGGIUNGI NUOVO PRODOTTO",
+    "elimina": "ELIMINA"
+  },
+  "lista": "Lista {{tag}}",
+  "modifica_item": "Modifica Prodotto",
+  "modifica_label": "Nome prodotto",
+  "comprato_label": "Comprato",
+  "aggiungi_item": "Aggiungi nuovo prodotto",
+  "delete_title": "Conferma Eliminzaione",
+  "delete_subtitle": "Sei sicuro di voler eliminare questo prodotto?"
+}

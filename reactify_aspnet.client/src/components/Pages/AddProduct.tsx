@@ -4,9 +4,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './AddProduct.module.css';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 const AddProduct = () => {
+    const { t } = useTranslation();
     const [title, setTitle] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
@@ -32,10 +34,10 @@ const AddProduct = () => {
     return (
         <div className={styles.container}>
             <Typography variant="h5" gutterBottom>
-                Aggiungi nuovo prodotto
+                {t('aggiungi_item')}
             </Typography>
             <TextField
-                label="Nome prodotto"
+                label={t('modifica_label')}
                 fullWidth
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -43,7 +45,7 @@ const AddProduct = () => {
             />
             <div className={styles.actions}>
                 <Button variant="outlined" onClick={() => navigate(`/${tag}`)}>
-                    Annulla
+                    {t('button.annulla')}
                 </Button>
                 <Button
                     variant="contained"
@@ -51,7 +53,7 @@ const AddProduct = () => {
                     onClick={handleAdd}
                     disabled={title.trim() === ''}
                 >
-                    Aggiungi
+                    {t('button.aggiungi')}
                 </Button>
             </div>
         </div>

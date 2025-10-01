@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\components\Layout\" />
+    <Folder Include="src\components\Utils\" />
   </ItemGroup>
 </Project>

@@ -7,8 +7,12 @@ import {
 import axios from 'axios';
 import styles from './Home.module.css';
 import { useTagContext } from './TagContext';
+import { useTranslation } from 'react-i18next';
 
 function Home() {
+
+    const { t } = useTranslation();
+
     const [tagName, setTagName] = useState("");
 
     const { refreshTags } = useTagContext();
@@ -43,13 +47,13 @@ function Home() {
     return (
         <div className={styles.container}>
             <Typography variant="h3" gutterBottom>
-                Benvenuto nella Home!
+                {t('home.welcome')}
             </Typography>
             <Typography variant="h5" gutterBottom>
-                Vuoi aggiungere una nuova lista?
+                {t('home.subtitle')}
             </Typography>
             <TextField
-                label="Nuovo tag"
+                label={t('home.label')}
                 fullWidth
                 margin="normal"
                 value={tagName}
@@ -62,7 +66,7 @@ function Home() {
                     onClick={handleAddTag}
                     disabled={tagName.trim() === ''}
                 >
-                    Salva
+                    {t('button.salva')}
                 </Button>
             </div>
         </div>   

@@ -1,0 +1,22 @@
+{
+  "app_name": "Reactify",
+  "home": {
+    "welcome": "Welcome to the Home!",
+    "subtitle": "Do you want to add a new list?",
+    "label": "New tag"
+  },
+  "button": {
+    "salva": "SAVE",
+    "annulla": "CANCEL",
+    "aggiungi": "ADD",
+    "aggiungi_item": "ADD NEW PRODUCT",
+    "elimina": "DELETE"
+  },
+  "lista": "List {{tag}}",
+  "modifica_item": "Edit Product",
+  "modifica_label": "Product name",
+  "comprato_label": "Purchased",
+  "aggiungi_item": "Add new product",
+  "delete_title": "Delete Confirmation",
+  "delete_subtitle": "Are you sure you want to delete this product?"
+}

@@ -3,29 +3,22 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+import translationEN from './components/Utils/translationEN.json';
+import translationIT from './components/Utils/translationIT.json';
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
       en: {
-        translation: {
-          Home: 'Home',
-          Products: 'Products',
-          Add: 'Add',
-          Reactify: 'Reactify',
-        },
+        translation: translationEN,
       },
       it: {
-        translation: {
-          Home: 'Home',
-          Products: 'Prodotti',
-          Add: 'Aggiungi',
-          Reactify: 'Reactify',
-        },
+        translation: translationIT,
       },
     },
-    fallbackLng: 'en',
+    fallbackLng: 'it',
     interpolation: {
       escapeValue: false,
     },
